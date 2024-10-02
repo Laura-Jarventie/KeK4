@@ -13,20 +13,21 @@ function preload() {
 }
 
 
-
 function setup() {
   leveys = windowWidth;
   korkeus = windowWidth/3;
-    createCanvas(leveys, korkeus);
-    image(taustakuva, 0, 0, leveys, korkeus);
-    ankka1 = new Ankka();
-    ankka2 = new Ankka();
+  createCanvas(leveys, korkeus);   
+  ankka1 = new Ankka();
+  ankka2 = new Ankka();  
   }
   
   function draw() {
   leveys = windowWidth;
   korkeus = windowWidth/3;
+  image(taustakuva, 0, 0, leveys, korkeus);
   ankka1.liikuta();
+  ankka2.liikuta();
+  luoJaLiikutaLauttaa();
   }
 
   function windowResized(){
@@ -35,10 +36,15 @@ function setup() {
   resizeCanvas(leveys, korkeus);
   }
 
+
+  function luoJaLiikutaLauttaa(){
+    rect(30, korkeus - (korkeus*0.15), 70, 20);
+  }
+
   class Ankka {
     constructor() {
       this.X = 0;
-      this.X_speed = 2;
+      this.X_speed = random(1,5);
     }
     
     liikuta(){
