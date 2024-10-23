@@ -8,6 +8,7 @@ let lautanLeveys;
 let lautanKorkeus;
 let lautanY;
 let painovoima = 0.05;
+let lautanX;
 
 // Load the image and create a p5.Image object.
 function preload() {
@@ -60,8 +61,23 @@ function setup() {
     }
     
     liikuta(){
+      lautanKorkeus = korkeus/20;
+      lautanLeveys = leveys/20;
+      lautanY = korkeus * 0.9;
+      lautanX = mouseX;
       this.X = this.X + this.xSpeed;
       this.ySpeed = this.ySpeed + painovoima;
+
+
+
+      if( this.X > lautanX && this.X < lautanX + lautanLeveys )
+      {
+        //otettu pois this.Y jälkeen this.korkeus niin alkoi toimimaan
+        if(this.Y  > lautanY && this.Y < lautanY + lautanKorkeus)
+          {
+            this.ySpeed = -abs(this.ySpeed);
+          }
+      }
       this.Y = this.Y + this.ySpeed;
       image(ankkakuva, this.X, this.Y, this.size, this.size)
     }
