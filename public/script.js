@@ -10,6 +10,8 @@ let lautanY;
 let painovoima = 0.05;
 let lautanX;
 
+let ankkaLista = [];
+
 // Load the image and create a p5.Image object.
 function preload() {
   taustakuva = loadImage('/images/lampi.png');
@@ -23,10 +25,9 @@ function setup() {
   lautanKorkeus = korkeus/20;
   lautanLeveys = leveys/20;
   lautanY = korkeus * 0.9;
-
   createCanvas(leveys, korkeus);   
-  ankka1 = new Ankka();
-  ankka2 = new Ankka();  
+  luoAnkkoja();
+
   }
   
   function draw() {
@@ -34,9 +35,12 @@ function setup() {
   korkeus = windowWidth/3;
   background("white");
   image(taustakuva, 0, 0, leveys, korkeus);
-  ankka1.liikuta();
-  ankka2.liikuta();
   luoJaLiikutaLauttaa();
+
+  ankkaLista.forEach(function(ankkaOlio, monesko){
+    ankkaOlio.liikuta();
+  });
+  
   }
 
   function windowResized(){
@@ -51,6 +55,13 @@ function setup() {
     rect(mouseX, lautanY, lautanLeveys, lautanKorkeus, 20, 20, 3, 3);
   }
 
+  function luoAnkkoja(){
+    ankkaOlio = new Ankka();  
+    ankkaLista.unshift(ankkaOlio);
+    setTimeout(luoAnkkoja, 2000);
+    console.log(ankkaLista);
+  }
+
   class Ankka {
     constructor() {
       this.X = 0;
@@ -62,7 +73,7 @@ function setup() {
     
     liikuta(){
       lautanKorkeus = korkeus/20;
-      lautanLeveys = leveys/20;
+      lautanLeveys = leveys/10;
       lautanY = korkeus * 0.9;
       lautanX = mouseX;
       this.X = this.X + this.xSpeed;
@@ -71,15 +82,19 @@ function setup() {
 
 
       if( this.X > lautanX && this.X < lautanX + lautanLeveys )
+
       {
         //otettu pois this.Y jälkeen this.korkeus niin alkoi toimimaan
-        if(this.Y  > lautanY && this.Y < lautanY + lautanKorkeus)
+        if(this.Y  + lautanKorkeus> lautanY && this.Y < lautanY + lautanKorkeus)
           {
             this.ySpeed = -abs(this.ySpeed);
           }
       }
+
+
       this.Y = this.Y + this.ySpeed;
       image(ankkakuva, this.X, this.Y, this.size, this.size)
+
     }
 
   }
