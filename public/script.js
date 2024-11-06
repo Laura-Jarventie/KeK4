@@ -9,6 +9,8 @@ let lautanKorkeus;
 let lautanY;
 let painovoima = 0.05;
 let lautanX;
+let pisteet = 0;
+let elamiaJaljella = 3;
 
 let ankkaLista = [];
 
@@ -38,7 +40,22 @@ function setup() {
   luoJaLiikutaLauttaa();
 
   ankkaLista.forEach(function(ankkaOlio, monesko){
-    ankkaOlio.liikuta();
+    
+  ankkaOlio.liikuta();
+
+    if(ankkaOlio.X > leveys){
+      ankkaLista.splice(monesko, 1);
+      pisteet = pisteet + 1;
+      //pisteet += 1;
+      console.log("Pisteet:"  + pisteet);
+    }
+
+    if(ankkaOlio.Y > korkeus){
+      ankkaLista.splice(monesko, 1);
+      elamiaJaljella -= 1;
+      console.log("Elämiä jäljellä: " + elamiaJaljella);
+    }
+
   });
   
   }
@@ -80,7 +97,6 @@ function setup() {
       this.ySpeed = this.ySpeed + painovoima;
 
 
-
       if( this.X > lautanX && this.X < lautanX + lautanLeveys )
 
       {
@@ -90,7 +106,6 @@ function setup() {
             this.ySpeed = -abs(this.ySpeed);
           }
       }
-
 
       this.Y = this.Y + this.ySpeed;
       image(ankkakuva, this.X, this.Y, this.size, this.size)
