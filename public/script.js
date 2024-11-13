@@ -28,7 +28,7 @@ function setup() {
   lautanLeveys = leveys/20;
   lautanY = korkeus * 0.9;
   createCanvas(leveys, korkeus);   
-  luoAnkkoja();
+  
 
   }
   
@@ -37,6 +37,15 @@ function setup() {
   korkeus = windowWidth/3;
   background("white");
   image(taustakuva, 0, 0, leveys, korkeus);
+  fill("#120e02");
+  textSize(30);
+  text('Pisteet: ' + pisteet, leveys/2, 30);
+  text('Elämiä jäljellä: ' + elamiaJaljella, leveys/2, 60);
+
+  if(elamiaJaljella ==0){
+    gameOver();
+  }
+
   luoJaLiikutaLauttaa();
 
   ankkaLista.forEach(function(ankkaOlio, monesko){
@@ -58,6 +67,16 @@ function setup() {
 
   });
   
+  }
+
+  function play(){
+    luoAnkkoja();
+  }
+
+  function gameOver(){
+    textSize(32);
+    text('GAME OVER', leveys/2, korkeus/2)
+    noLoop();
   }
 
   function windowResized(){
